@@ -1,26 +1,22 @@
-//game();
+let roundNum = 0;
 
-// for (let i = 1; i < 4; i++) {
-//     let playerSelection = playerPlay();
-//     let computerSelection = computerPlay();
 
-//     console.log(playRound(playerSelection, computerSelection, i));
-// }
 buttons = document.querySelectorAll('button');
 buttons.forEach( (button) => {
     button.addEventListener('click', (e) => playGame(button))
 });
 
 function playGame(button){
+    roundNum++
     let playerSelection = button.id;
     let computerSelection = computerPlay();
 
-    msg = playRound(playerSelection,computerSelection);
+    msg = playRound(playerSelection,computerSelection, roundNum);
 
     document.getElementById('results').innerText = msg;
 }
 
-function playRound(playerSelection,computerSelection){
+function playRound(playerSelection, computerSelection, roundNum){
     let playerChoice = playerSelection;
     let computerChoice = computerSelection;
 
@@ -36,8 +32,10 @@ function playRound(playerSelection,computerSelection){
         winLoseMsg = 'You lose!';
     }
 
-    let msg = `You chose ${playerChoice} and the computer chose ${computerChoice}.
+    let msg = `Round ${roundNum}:
     
+        You chose ${playerChoice} and the computer chose ${computerChoice}.
+
         ${winLoseMsg}`;
     return msg;
 }
