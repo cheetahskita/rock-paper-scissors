@@ -31,6 +31,7 @@ function clearResults(){
 function playRound(playerSelection, computerSelection, roundNum){
     let playerChoice = playerSelection;
     let computerChoice = computerSelection;
+    let winLoseMsg;
 
     if (playerChoice == computerChoice){
         winLoseMsg = 'You tied!';
@@ -52,7 +53,17 @@ function playRound(playerSelection, computerSelection, roundNum){
     msg[0] = `Round: ${roundNum}`;
     msg[1] = `You chose ${playerChoice} <> Computer chose ${computerChoice}`;
     msg[2] = winLoseMsg;
-    msg[3] = `Score: You ${playerScore} - Computer ${computerScore}`;
+    msg[3] = `Score: You ${playerScore} - Computer ${computerScore}`;    
+
+    if(playerScore >= 5){
+        winLoseMsg = 'Congradulations!!! You won the game!!!';
+        msg[4] = winLoseMsg;
+        document.getElementById('buttons').innerText = '';
+    }else if(computerScore >= 5){
+        winLoseMsg = 'Sorry, you lost the game';
+        msg[4] = winLoseMsg;
+        document.getElementById('buttons').innerText = '';
+    }
 
     return msg;
 }
@@ -83,6 +94,12 @@ async function displayResults(msg){
     document.getElementById('results').innerText = msg[2];
     await sleep(timeDelay);
     document.getElementById('score').innerText = msg[3];
+    if (msg[4]){
+        await sleep(timeDelay);
+        document.getElementById('endgame').innerText = msg[4];
+
+        clearGame();
+    }
 }
 
 async function animateGame(timeDelay){
@@ -102,3 +119,11 @@ async function animateGame(timeDelay){
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
+
+function clearGame(){
+    document.getElementById('instructions').innerText = '';
+    document.getElementById('round').innerText = '';
+    document.getElementById('intro').innerText = '';
+    document.getElementById('choice').innerText = '';
+    document.getElementById('results').innerText = '';
+}
